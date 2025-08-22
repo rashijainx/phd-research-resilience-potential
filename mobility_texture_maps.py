@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import random
+import itertools
 
 # Categories
 slopes = ["Flat", "Inclined", "Cliff"]
@@ -18,7 +19,7 @@ def generate_terrain(ax, slope, texture, composition, seed=None):
     if slope == "Flat":
         Z = np.zeros_like(X, dtype=float)
     elif slope == "Inclined":
-        Z = 0.2 * X  # gentle slope
+        Z = 0.3 * X  # gentle slope
     elif slope == "Cliff":
         Z = np.where(X < 5, 0.0, 8.0)  # sharp elevation change
 
@@ -60,3 +61,23 @@ for i, combo in enumerate(sampled_combos, 1):
 
 plt.tight_layout()
 plt.show()
+
+
+# # Plot
+#     ax.plot_surface(X, Y, Z, color=color, rstride=2, cstride=2,
+#                     linewidth=0, antialiased=False, shade=True)
+#     ax.set_title(f"{slope}, {texture}, {composition}", fontsize=7)
+#     ax.set_xticks([]); ax.set_yticks([]); ax.set_zticks([])
+#     ax.view_init(elev=30, azim=135)
+
+# # Generate all 48 combinations
+# combinations = list(itertools.product(slopes, textures, compositions))
+
+# # Plot in groups of 12
+# for i in range(0, 48, 12):
+#     fig = plt.figure(figsize=(15, 12))
+#     for j, combo in enumerate(combinations[i:i+12], 1):
+#         ax = fig.add_subplot(3, 4, j, projection='3d')
+#         generate_terrain(ax, *combo, seed=j)
+#     plt.tight_layout()
+#     plt.show()
